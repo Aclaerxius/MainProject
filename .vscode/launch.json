@@ -8,7 +8,7 @@
       "cwd": "${workspaceFolder}",
       "program": "${workspaceFolder}/build/cryptoticker",
       "preLaunchTask": "build",
-      "args": [],
+      "args": []
     },
     {
       "name": "C/C++ Runner: Debug Session With Arguments",
@@ -18,9 +18,24 @@
       "program": "${workspaceFolder}/build/cryptoticker",
       "preLaunchTask": "build",
       "args": [
-        "dfdf",
-        "--dfdfd"
-      ],
+        "-",
+        "--sort",
+        "price",
+        "asc",
+        "--sort",
+        "symbol",
+        "desc",
+        "--limit",
+        "10",
+        "-—pairs",
+        "BTCUSDT",
+        "ET*USDT",
+        "--ignore-errors",
+        "--live",
+        "--trend",
+        "5",
+        "-"
+      ]
     }
   ]
 }
