@@ -6,6 +6,7 @@
 #include "include/VariadicTable.h"
 #include "include/color.hpp"
 #include "include/json.hpp"
+#include "request_manager.h"
 #include "test.h"
 #include "user_input.h"
 

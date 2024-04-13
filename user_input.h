@@ -5,25 +5,25 @@
 #include <iostream>
 #include <string>
 #include <vector>
+using namespace std;
 
 class SortInput {
    public:
-    string column;
-    string order;
+    string column = "";
+    string order = "";
 };
 
 class UserInput {
    public:
-    std::vector<SortInput> sort;
-    int limit;
+    vector<SortInput> sort;
+    int limit = 0;
     vector<string> pairs;
-    bool ignoreErrors;
-    int live;
-    bool trend;
+    bool ignoreErrors = false;
+    int live = 0;
+    bool trend = false;
+    vector<vector<string>> userArgsSubVectors;
 
     static UserInput parse(int argc, char* argv[]) {
-        UserInput userInput;
-
         // store user input arguments in a vector string
         vector<string> userArgs;
         for (int i = 0; i < argc; i++) {
@@ -37,7 +37,7 @@ class UserInput {
             string arg = userArgs.at(i);
 
             if (arg.length() > 1 && arg.at(0) == '-' && arg.at(1) == '-') {
-                userArgsSubVectors.push_back(std::vector<std::string>());
+                userArgsSubVectors.push_back(vector<string>());
                 userArgsSubVectors.back().push_back(arg);
             } else {
                 if (!userArgsSubVectors.empty()) {
@@ -46,121 +46,141 @@ class UserInput {
             }
         }
 
-        for (const auto& subVector : userArgsSubVectors) {
-            string sub = subVector[0];
-            // Sort
+        UserInput userInput;
+        string flag;
 
-            if (sub == "--sort" && subVector.size() > 1 && subVector.size() <= 12) {
-                for (int i = 1; i < subVector.size(); i++) {
+        for (const auto& subVector : userArgsSubVectors) {
+            flag = subVector[0];
+            if (flag == "--ignore-errors") {
+                userInput.ignoreErrors = true;
+            }
+        }
+
+        for (const auto& subVector : userArgsSubVectors) {
+            flag = subVector[0];
+
+            // Sort
+            if (flag == "--sort") {
+                if (subVector.size() % 2 != 1) {
+                    if (userInput.ignoreErrors != true) {
+                        // throw runtime_error("Invalid input for sorting. Please check your spelling.");
+                    }
+                }
+
+                for (int i = 1; i < subVector.size(); i += 2) {
                     string sub1 = subVector[i];
                     string sub2 = subVector[i + 1];
 
                     SortInput newSortInput;
-                    newSortInput.column = sub1;
 
-                    if (sub1 == "symbol") {
-                        newSortInput.column = "symbol";
-                    }
+                    {
+                        if (sub1 == "symbol") {
+                            newSortInput.column = sub1;
+                        }
 
-                    if (sub1 == "price") {
-                        newSortInput.column = "price";
-                    }
+                        if (sub1 == "price") {
+                            newSortInput.column = sub1;
+                        }
 
-                    if (sub1 == "price_change") {
-                        newSortInput.column = "price_change";
-                    }
+                        if (sub1 == "price_change") {
+                            newSortInput.column = sub1;
+                        }
 
-                    if (sub1 == "volume") {
-                        newSortInput.column = "volume";
-                    }
+                        if (sub1 == "volume") {
+                            newSortInput.column = sub1;
+                        }
 
-                    if (sub1 == "number_of_trades") {
-                        newSortInput.column = "number_of_trades";
-                    }
+                        if (sub1 == "number_of_trades") {
+                            newSortInput.column = sub1;
+                        }
 
-                    if (sub1 == "trend") {
-                        newSortInput.column = "trend";
+                        if (sub1 == "trend") {
+                            newSortInput.column = sub1;
+                        }
                     }
 
                     if (sub2 == "asc") {
-                        newSortInput.order = "asc";
+                        newSortInput.order = sub2;
                     }
 
                     if (sub2 == "desc") {
-                        newSortInput.order = "desc";
+                        newSortInput.order = sub2;
                     }
 
                     if (!newSortInput.column.empty() && !newSortInput.order.empty()) {
                         userInput.sort.push_back(newSortInput);
-                    }
-                    // if (sub1 != "symbol" && sub1 != "price" && sub1 != "price_change" && sub1 != "volume" && sub1 != "number_of_trades" && sub1 != "trend" && sub2 != "asc" && sub2 != "desc")
-                    // {
-                    //   cout << "ERROR" << endl;
-                    // }
-                }
-            }
-
-            // Limit
-            if (sub == "--limit") {
-                for (int i = 1; i < subVector.size(); i++) {
-                    if (i > 0) {
-                        userInput.limit = stoi(subVector[i]);
+                    } else {
+                        throw runtime_error("Invalid input for sorting. Please check your spelling.");
                     }
                 }
             }
 
             // Pairs
-            if (sub == "--pairs") {
+            if (flag == "--pairs") {
                 for (int i = 1; i < subVector.size(); i++) {
-                    string newPair;
-                    newPair = subVector[i];
-                    userInput.pairs.push_back(newPair);
-                }
-            }
-
-            // Ignore errors
-            if (sub != "--ignore-errors") {
-                userInput.ignoreErrors = false;
-            } else {
-                userInput.ignoreErrors = true;
-            }
-
-            // Live
-            if (sub != "--live") {
-                userInput.live = 0;
-            } else {
-                userInput.live = 5;
-                for (int i = 1; i < subVector.size(); i++) {
-                    if (i > 0 && i < 100) {
-                        userInput.live = stoi(subVector[i]);
-                    } else if (i > 100) {
-                        userInput.live = 100;
-                    }
+                    string pairsArg = subVector[i];
+                    transform(pairsArg.begin(), pairsArg.end(), pairsArg.begin(), ::toupper);
+                    userInput.pairs.push_back(pairsArg);
                 }
             }
 
             // Trend
-            if (sub != "--trend") {
-                userInput.trend = false;
-            } else {
+            if (flag == "--trend") {
                 userInput.trend = true;
+            }
+
+            // Limit
+            if (flag == "--limit") {
+                string limitArg = subVector[1];
+                int limitArgInt = stoi(limitArg);
+                if (limitArgInt > 0) {
+                    userInput.limit = limitArgInt;
+                } else {
+                    if (userInput.ignoreErrors == true) {
+                        userInput.limit = limitArgInt;
+                    } else {
+                        throw runtime_error("Invalid input number for row limit. The input number must be a positive value.");
+                    }
+                }
+            }
+            // Live
+            if (flag == "--live") {
+                if (subVector.size() > 1) {
+                    string liveArg = subVector[1];
+                    int liveArgInt = stoi(liveArg);
+                    if (liveArgInt > 0) {
+                        userInput.live = liveArgInt;
+                    } else {
+                        userInput.live = 5;
+                    }
+                } else {
+                    userInput.live = 5;
+                }
             }
         }
 
         return userInput;
     };
+    void print() {
+        for (const auto& subVector : userArgsSubVectors) {
+            for (const auto& option : subVector) {
+                cout << option << " ";
+            }
+            cout << endl;
+        }
 
-    void print();
-};
-void UserInput::print() {
-    for (const auto& sortInput : sort) {
-        std::cout << "Column: " << sortInput.column << ", Order: " << sortInput.order << std::endl;
+        for (const auto& sortInput : sort) {
+            cout << "Column: " << sortInput.column << ", Order: " << sortInput.order << endl;
+        }
+
+        cout << "Limit: " << limit << endl;
+
+        for (const auto& pairsInput : pairs) {
+            cout << "Pair: " << pairsInput << endl;
+        }
+
+        cout << "Ignore Errors: " << ignoreErrors << endl;
+        cout << "Live: " << live << endl;
+        cout << "Trend: " << trend << endl;
     }
-    std::cout << "Limit: " << limit << std::endl;
-    for (const auto& pairsInput : pairs) {
-        std::cout << "Pair: " << pairsInput << std::endl;
-    }
-    std::cout << "Ignore Errors: " << ignoreErrors << std::endl;
-    std::cout << "Live: " << live << std::endl;
-    std::cout << "Trend: " << trend << std::endl;
 };
