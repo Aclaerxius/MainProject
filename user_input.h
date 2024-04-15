@@ -130,33 +130,46 @@ class UserInput {
             }
 
             // Limit
-            if (flag == "--limit") {
-                string limitArg = subVector[1];
-                int limitArgInt = stoi(limitArg);
-                if (limitArgInt > 0) {
-                    userInput.limit = limitArgInt;
-                } else {
-                    if (userInput.ignoreErrors == true) {
-                        userInput.limit = limitArgInt;
-                    } else {
-                        throw runtime_error("Invalid input number for row limit. The input number must be a positive value.");
-                    }
-                }
-            }
+            // if (flag == "--limit" && subVector.size() > 1) {
+            //     string limitArg = subVector[1];
+            //     int limitArgInt;
+            //     size_t pos{};
+            //     try {
+            //         cout << "stoi(" << quoted(limitArg) << "): ";
+            //         const int i{stoi(limitArg, &pos)};
+            //         cout << i << "; pos: " << pos << '\n';
+            //         limitArgInt = i;
+            //     } catch (invalid_argument const& ex) {
+            //         cout << "invalid_argument::what(): " << ex.what() << '\n';
+            //         userInput.limit = !limitArgInt;
+            //     } catch (out_of_range const& ex) {
+            //         cout << "out_of_range::what(): " << ex.what() << '\n';
+            //         const long long ll{stoll(limitArg, &pos)};
+            //         cout << "stoll(" << quoted(limitArg) << "): " << ll << "; pos: " << pos << '\n';
+            //         userInput.limit = limitArgInt;
+            //     }
+
+            //     if (limitArgInt > 0) {
+            //         userInput.limit = limitArgInt;
+            //     } else if (userInput.ignoreErrors == true) {
+            //         userInput.limit = limitArgInt;
+            //     }
+            // }
+
             // Live
-            if (flag == "--live") {
-                if (subVector.size() > 1) {
-                    string liveArg = subVector[1];
-                    int liveArgInt = stoi(liveArg);
-                    if (liveArgInt > 0) {
-                        userInput.live = liveArgInt;
-                    } else {
-                        userInput.live = 5;
-                    }
-                } else {
-                    userInput.live = 5;
-                }
-            }
+            // if (flag == "--live") {
+            //     if (subVector.size() > 1) {
+            //         string liveArg = subVector[1];
+            //         int liveArgInt = stoi(liveArg);
+            //         if (liveArgInt > 0) {
+            //             userInput.live = liveArgInt;
+            //         } else {
+            //             userInput.live = 5;
+            //         }
+            //     } else {
+            //         userInput.live = 5;
+            //     }
+            // }
         }
 
         return userInput;
