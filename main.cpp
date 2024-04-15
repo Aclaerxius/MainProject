@@ -1,15 +1,22 @@
+#include <stdlib.h>
+
 #include <iostream>
-#include "test.h"
-#include "include/json.hpp"
+
+#include "include/HTTPRequest.hpp"
+#include "include/VariadicTable.h"
 #include "include/color.hpp"
+#include "include/json.hpp"
+#include "request_manager.h"
+#include "test.h"
+#include "user_input.h"
 
 using namespace std;
 
-int main()
-{
-  int v = 5;
+// vector<string> valid_sort_columns = {"symbol", "price", "price_change", "volume", "number_of_trades", "trend"};
 
-  int x = 10;
-  std::cout << "Hello,---,,, , World2!" << TEST_DEFINE << v + x << std::endl;
-  return 0;
+int main(int argc, char *argv[]) {
+    UserInput userInput = UserInput::parse(argc, argv);
+    userInput.print();
+
+    return 0;
 }
