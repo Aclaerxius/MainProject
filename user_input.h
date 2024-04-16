@@ -21,6 +21,7 @@ class UserInput {
     bool ignoreErrors = false;
     int live = 0;
     bool trend = false;
+
     vector<vector<string>> userArgsSubVectors;
 
     static UserInput parse(int argc, char* argv[]) {
@@ -174,6 +175,7 @@ class UserInput {
 
         return userInput;
     };
+
     void print() {
         for (const auto& subVector : userArgsSubVectors) {
             for (const auto& option : subVector) {
