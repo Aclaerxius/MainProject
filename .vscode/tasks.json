@@ -10,10 +10,14 @@
         "-g",
         "${file}",
         "-o",
-        "${workspaceFolder}/build/cryptoticker"
+        "${workspaceFolder}/build/cryptoticker",
+        "-I/opt/homebrew/opt/openssl/include",
+        "-L/opt/homebrew/opt/openssl/lib",
+        "-lssl",
+        "-lcrypto"
       ],
       "options": {
-        "cwd": "${workspaceFolder}"
+        "cwd": "${workspaceFolder}",
       },
       "problemMatcher": [
         "$gcc"

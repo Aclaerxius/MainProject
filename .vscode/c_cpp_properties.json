@@ -3,7 +3,8 @@
     {
       "name": "macos-clang-arm64",
       "includePath": [
-        "${workspaceFolder}/**"
+        "${workspaceFolder}/**",
+        "/opt/homebrew/opt/openssl/include"
       ],
       "compilerPath": "/opt/homebrew/opt/llvm/bin/clang",
       "cStandard": "${default}",
