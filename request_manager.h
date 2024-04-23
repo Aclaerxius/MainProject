@@ -1,12 +1,14 @@
 #pragma once
 
-#include <stdlib.h>
 #include <string>
 #include <vector>
-#include <iostream>
+
+#define CPPHTTPLIB_OPENSSL_SUPPORT
+#include "include/httplib.h"
 #include "include/json.hpp"
 
 using namespace std;
+using json = nlohmann::json;
 
 class RequestManager
 {
@@ -18,14 +20,21 @@ public:
     this->host = host;
   }
 
-  nlohmann::json get(string path)
+  json get(string path)
   {
-    string url = this->host + path;
+    json json_response;
 
-    // TODO: make request
+    try
+    {
+      httplib::Client cli{host};
+      const auto response = cli.Get(path);
+      json_response = json::parse(response->body);
+    }
+    catch (const exception &e)
+    {
+      throw e;
+    }
 
-    nlohmann::json response;
-
-    return response;
+    return json_response;
   }
 };

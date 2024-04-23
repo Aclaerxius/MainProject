@@ -57,7 +57,6 @@
   "C_Cpp_Runner.useLinkTimeOptimization": false,
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "files.associations": {
-    "*.wasm": "wasm",
     "vector": "cpp",
     "__bit_reference": "cpp",
     "__config": "cpp",
@@ -113,7 +112,6 @@
     "unordered_map": "cpp",
     "valarray": "cpp",
     "variant": "cpp",
-    "algorithm": "cpp",
-    "deque": "cpp"
+    "algorithm": "cpp"
   }
 }
