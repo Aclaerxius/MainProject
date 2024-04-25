@@ -164,17 +164,23 @@ public:
         {
           string pair = flag_args.at(j);
 
+          bool is_valid_pair = true;
+
           for (int k = 0; k < pair.size(); k++)
           {
             char c = pair.at(k);
-            if (iswalnum(c) || c == '*')
-            {
-              user_input.pairs.push_back(pair);
-            }
-            else
+            if (!iswalnum(c) && c != '*')
             {
               user_input.my_runtime_error("Invalid pair argument: " + pair);
+
+              is_valid_pair = false;
+              break;
             }
+          }
+
+          if (is_valid_pair)
+          {
+            user_input.pairs.push_back(pair);
           }
         }
       }
@@ -245,5 +251,7 @@ public:
         throw runtime_error("Invalid flag: " + flag_args.front());
       }
     }
+
+    return user_input;
   }
 };

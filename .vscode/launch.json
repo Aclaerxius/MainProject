@@ -37,6 +37,29 @@
         "5",
         "-"
       ]
+    },
+    {
+      "name": "C/C++ Runner: Debug Session With Good",
+      "type": "lldb",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "program": "${workspaceFolder}/build/cryptoticker",
+      "preLaunchTask": "build",
+      "args": [
+        "-",
+        "--sort",
+        "price",
+        "desc",
+        "--limit",
+        "10",
+        "--pairs",
+        "ETHUS**",
+        "--ignore-errors",
+        "--live",
+        "15",
+        "--trend",
+        "5",
+      ]
     }
   ]
 }

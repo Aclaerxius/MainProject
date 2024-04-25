@@ -15,6 +15,6 @@ public:
   double price;
   double price_change;
   double volume;
-  int number_of_trades;
+  long number_of_trades;
   double trend;
 };

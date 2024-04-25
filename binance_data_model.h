@@ -10,6 +10,7 @@ using namespace std;
 
 class BinanceDataModel
 {
+public:
   string symbol;
   double priceChange;
   double priceChangePercent;
@@ -40,21 +41,21 @@ public:
     try
     {
       model.symbol = json_object.at("symbol").get<string>();
-      model.priceChange = json_object.at("priceChange").get<double>();
-      model.priceChangePercent = json_object.at("priceChangePercent").get<double>();
-      model.weightedAvgPrice = json_object.at("weightedAvgPrice").get<double>();
-      model.prevClosePrice = json_object.at("prevClosePrice").get<double>();
-      model.lastPrice = json_object.at("lastPrice").get<double>();
-      model.lastQty = json_object.at("lastQty").get<double>();
-      model.bidPrice = json_object.at("bidPrice").get<double>();
-      model.bidQty = json_object.at("bidQty").get<double>();
-      model.askPrice = json_object.at("askPrice").get<double>();
-      model.askQty = json_object.at("askQty").get<double>();
-      model.openPrice = json_object.at("openPrice").get<double>();
-      model.highPrice = json_object.at("highPrice").get<double>();
-      model.lowPrice = json_object.at("lowPrice").get<double>();
-      model.volume = json_object.at("volume").get<double>();
-      model.quoteVolume = json_object.at("quoteVolume").get<double>();
+      model.priceChange = stod(json_object.at("priceChange").get<string>());
+      model.priceChangePercent = stod(json_object.at("priceChangePercent").get<string>());
+      model.weightedAvgPrice = stod(json_object.at("weightedAvgPrice").get<string>());
+      model.prevClosePrice = stod(json_object.at("prevClosePrice").get<string>());
+      model.lastPrice = stod(json_object.at("lastPrice").get<string>());
+      model.lastQty = stod(json_object.at("lastQty").get<string>());
+      model.bidPrice = stod(json_object.at("bidPrice").get<string>());
+      model.bidQty = stod(json_object.at("bidQty").get<string>());
+      model.askPrice = stod(json_object.at("askPrice").get<string>());
+      model.askQty = stod(json_object.at("askQty").get<string>());
+      model.openPrice = stod(json_object.at("openPrice").get<string>());
+      model.highPrice = stod(json_object.at("highPrice").get<string>());
+      model.lowPrice = stod(json_object.at("lowPrice").get<string>());
+      model.volume = stod(json_object.at("volume").get<string>());
+      model.quoteVolume = stod(json_object.at("quoteVolume").get<string>());
       model.openTime = json_object.at("openTime").get<long>();
       model.closeTime = json_object.at("closeTime").get<long>();
       model.firstId = json_object.at("firstId").get<long>();
